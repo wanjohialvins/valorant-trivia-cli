@@ -30,12 +30,13 @@ function askQuestion() {
     console.log(`${i + 1}. ${opt}`);
   });
 
-  // Start timer for this question
-  let answered = false; // Track if user answered
+  let answered = false;
+
   const timer = setTimeout(() => {
     if (!answered) {
-      console.log("\n⏰ Time's up!");
       answered = true;
+      console.log("\n⏰ Time's up!");
+      console.log(`The correct answer was: ${q.options[q.answer]}`);
       currentIndex++;
       askQuestion();
     }
@@ -43,19 +44,24 @@ function askQuestion() {
 
   rl.question("\nAnswer (number): ", (input) => {
     if (!answered) {
-      answered = true;       // mark as answered
-      clearTimeout(timer);    // stop the timer
-      if (parseInt(input) - 1 === q.answer) {
+      answered = true;
+      clearTimeout(timer);
+
+      const userAnswer = parseInt(input) - 1;
+      if (userAnswer === q.answer) {
         console.log("✅ Correct!");
         score++;
       } else {
         console.log("❌ Wrong!");
+        console.log(`The correct answer was: ${q.options[q.answer]}`);
       }
+
       currentIndex++;
-      askQuestion();          // move to next question
+      askQuestion();
     }
   });
 }
+
 
 
 function endGame() {
